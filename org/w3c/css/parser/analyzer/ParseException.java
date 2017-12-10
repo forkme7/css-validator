@@ -137,14 +137,13 @@ public class ParseException extends Exception {
         maxSize = expectedTokenSequences[i].length;
       }
       for (int j = 0; j < expectedTokenSequences[i].length; j++) {
-        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');
+        expected.append(tokenImage[expectedTokenSequences[i][j]]);
       }
       if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {
-        expected.append("...");
+          expected.append("|");
       }
-      expected.append(EOL).append("    ");
     }
-    String retval = "Encountered \"";
+    String retval = "Encountered ";
     Token tok = currentToken.next;
     for (int i = 0; i < maxSize; i++) {
       if (i != 0) retval += " ";
@@ -152,27 +151,15 @@ public class ParseException extends Exception {
         retval += tokenImage[0];
         break;
       }
-      retval += " " + tokenImage[tok.kind];
-      retval += " \"";
-      retval += add_escapes(tok.image);
-      retval += " \"";
+      retval += "\u201C" + add_escapes(tok.image) + "\u201D. ";
       tok = tok.next;
     }
-    retval += "\" at line " + currentToken.next.beginLine + ", column " + currentToken.next.beginColumn;
-    retval += "." + EOL;
-    
-    
-    if (expectedTokenSequences.length == 0) {
-        // Nothing to add here
+    if (expectedTokenSequences.length == 1) {
+      retval += "Was expecting: " ;
     } else {
-	    if (expectedTokenSequences.length == 1) {
-	      retval += "Was expecting:" + EOL + "    ";
-	    } else {
-	      retval += "Was expecting one of:" + EOL + "    ";
-	    }
-	    retval += expected.toString();
+      retval += "Was expecting one of: ";
     }
-    
+    retval += "\u201C" + expected.toString() + "\u201D";
     return retval;
   }
 

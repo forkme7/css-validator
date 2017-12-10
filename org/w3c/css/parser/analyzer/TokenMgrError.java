@@ -128,11 +128,9 @@ public class TokenMgrError extends Error
    */
   protected static String LexicalErr(boolean EOFSeen, int lexState, int errorLine, int errorColumn, String errorAfter, int curChar) {
     char curChar1 = (char)curChar;
-    return("Lexical error at line " +
-          errorLine + ", column " +
-          errorColumn + ".  Encountered: " +
-          (EOFSeen ? "<EOF> " : ("\"" + addEscapes(String.valueOf(curChar1)) + "\"") + " (" + curChar + "), ") +
-          "after : \"" + addEscapes(errorAfter) + "\"");
+    return("Encountered: " +
+          (EOFSeen ? "<EOF> " : ("\u201C" + addEscapes(String.valueOf(curChar1)) + "\u201D") + " (" + curChar + "), ") +
+          "after : \u201C" + addEscapes(errorAfter) + "\u201D");
   }
 
   /**
