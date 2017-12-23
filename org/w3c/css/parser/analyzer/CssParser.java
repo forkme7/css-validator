@@ -6063,7 +6063,10 @@ n.image = Util.strip(n.image);
 	 }
 	 token = oldToken;
 	 jj_kind = kind;
-	 throw generateParseException();
+	 if (kind == LBRACE) {
+	   addError(generateParseException(), skipStatement());
+	 }
+	 return token;
   }
 
   @SuppressWarnings("serial")
