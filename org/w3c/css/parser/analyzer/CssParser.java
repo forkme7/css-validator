@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.net.URL;
 import java.math.BigDecimal;
@@ -6064,7 +6065,15 @@ n.image = Util.strip(n.image);
 	 token = oldToken;
 	 jj_kind = kind;
 	 if (kind == LBRACE) {
-	   addError(generateParseException(), skipStatement());
+	   if (token.kind == ANY && token.next.kind == IDENT) {
+		 addError(new ParseException( //
+		   ac.getMsg().getString("parser.asterisk_prefixed_ident", //
+			 new ArrayList<String>( //
+			   Arrays.asList(token.image + token.next.image)))), //
+		   skipStatement());
+	   } else {
+		 addError(generateParseException(), skipStatement());
+	   }
 	 }
 	 return token;
   }

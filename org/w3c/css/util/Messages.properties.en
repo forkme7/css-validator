@@ -426,3 +426,5 @@ error.incompatibletypes: The types are incompatible
 error.invalidtype: Invalid type: %s
 error.typevaluemismatch: The value %s is incompatible with its type definition <%s>
 
+# hacks
+parser.asterisk_prefixed_ident: Invalid identifier \u201C%s\u201D (asterisk-prefixed)
